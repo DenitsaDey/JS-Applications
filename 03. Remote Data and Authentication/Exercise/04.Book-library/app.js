@@ -1,27 +1,16 @@
-// load all books
-// create book
-// edit book
-// delete book
-
-// handle create form
-// handle edit form
-
-// load book for editting
-// handle delete button
-
-// initialization
 const libraryUrl = 'http://localhost:3030/jsonstore/collections/books';
 const tbody = document.querySelector('tbody');
-const createFormEl = document.getElementById('createForm')
-const editFormEl = document.getElementById('editForm')
+const createFormEl = document.getElementById('createForm');
+const editFormEl = document.getElementById('editForm');
 document.getElementById('loadBooks').addEventListener('click', loadAllBooks);
-createFormEl.addEventListener('click', onCreate);
-editFormEl.addEventListener('click', onEditSumit);
+createFormEl.addEventListener('submit', onCreate);
+editFormEl.addEventListener('submit', onEditSubmit);
 tbody.addEventListener('click', onTableClick);
 
 loadAllBooks();
 
 async function request(url, options) {
+    
     const response = await fetch(url, options);
 
     if(!response.ok){
@@ -52,14 +41,14 @@ async function loadAllBooks(){
     const books = await request(libraryUrl);
 
     const result = Object.entries(books).map(([id, book]) => createRow(id, book));
-    tbody.replace(...result);
+    tbody.replaceChildren(...result);
 }
 
 
 async function onCreate(event){
     event.preventDefault();
 
-    const formData = new FormData(event.target.value);
+    const formData = new FormData(event.target);
 
     const author = formData.get('author');
     const title = formData.get('title');
@@ -82,7 +71,7 @@ async function createBook(book){
 }
 
 
-async function onTableClick(event){
+function onTableClick(event){
     if(event.target.className == 'delete'){
         onDelete(event.target);
     } else if(event.target.className == 'edit'){
@@ -107,7 +96,7 @@ async function onEdit(button){
 async function onEditSubmit(event){
     event.preventDefault();
 
-    const formData = new FormData(event.target.value);
+    const formData = new FormData(event.target);
 
     const id = formData.get('id');
     const author = formData.get('author');
@@ -146,7 +135,7 @@ async function onDelete(button){
 }
 
 async function deleteBook(id){
-    const result = await request(`${libraryUrl}${id}`, {
+    const result = await request(`${libraryUrl}/${id}`, {
         method: 'delete'
     });
 
