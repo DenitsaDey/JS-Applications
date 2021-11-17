@@ -1,4 +1,4 @@
-import { html, nothing} from '../../node_modules/lit-html/lit-html.js';
+import { html } from '../../node_modules/lit-html/lit-html.js';
 import * as carService from '../services/carService.js';
 
 const carRecord = (car) => html`
@@ -24,7 +24,7 @@ const myListingTemplate = (cars = []) => html`
     <section id="my-listings">
     <h1>My car listings</h1>
     <div class="listings">
-        ${cars.length == 0 
+        ${cars.length == 0
         ? html`<p class="no-cars"> You haven't listed any cars yet.</p>`
         : cars.map(carRecord)}
         
@@ -35,13 +35,8 @@ const myListingTemplate = (cars = []) => html`
 
 export const renderMyListing = (ctx) => {
     let userId = ctx.user._id;
- carService.getOwn(userId)
- .then(cars => {
-     if(cars.length == 0){
-         return cars;
-         console.log(cars.length);
-     }
-     ctx.render(myListingTemplate(cars));
-     console.log(cars.length);
- });    
+    carService.getOwn(userId)
+        .then(cars => {
+            ctx.render(myListingTemplate(cars));
+        });
 }

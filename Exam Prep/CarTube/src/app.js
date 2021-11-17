@@ -13,6 +13,7 @@ import {renderCarDetails } from './views/detailsCarView.js'
 import {renderEditCar } from './views/editCarView.js'
 import {renderDeleteCar } from './views/deleteCarView.js'
 import {renderMyListing } from './views/myListingView.js'
+import {renderSearch } from './views/searchView.js'
 
 // authMW would go first so that navigationMW can have access to it
 page(authMW);
@@ -35,6 +36,7 @@ page('/create', renderCreateCar);
 page('/listing/:carId', renderCarDetails);
 page('/listing/:carId/edit', renderEditCar);
 page('/listing/:carId/delete', renderDeleteCar);
-page('/my-listing/', renderMyListing);
+page('/profile', renderMyListing);
+page('/search', renderSearch);
 
 page.start();

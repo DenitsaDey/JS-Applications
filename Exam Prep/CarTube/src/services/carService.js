@@ -13,6 +13,10 @@ export const getOne = (id) => {
     return request.get(`${api.cars}/${id}`);
 }
 
+export const getByYear = (year) => {
+    return request.get(`${api.cars}?where=year%3D${year}`);
+}
+
 export const createCar = (car) => {
     return request.post(api.cars, car); 
 }
@@ -24,23 +28,3 @@ export const updateCar = (id, car) => {
 export const deleteCar = (id) => {
     return request.del(`${api.cars}/${id}`); 
 }
-
-/*
-_createdOn: 1616162253496
-​​
-_id: "3987279d-0ad4-4afb-8ca9-5b256ae3b298"
-​​
-_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8"
-​​
-brand: "Audi"
-​​
-description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-​​
-imageUrl: "/images/audia3.jpg"
-​​
-model: "A3"
-​​
-price: 25000
-​​
-year: 2018
-*/

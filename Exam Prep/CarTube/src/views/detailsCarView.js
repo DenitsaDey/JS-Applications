@@ -1,4 +1,4 @@
-import { html, nothing} from '../../node_modules/lit-html/lit-html.js';
+import { html, nothing } from '../../node_modules/lit-html/lit-html.js';
 import * as carService from '../services/carService.js';
 
 const detailsTemplate = (car, userId) => html`
@@ -15,13 +15,13 @@ const detailsTemplate = (car, userId) => html`
         </ul>
 
         <p class="description-para">${car.description}</p>
-        ${car._ownerId == userId
-            ? html`<div class="listings-buttons">
+        ${userId != undefined && car._ownerId == userId
+        ? html`<div class="listings-buttons">
             <a href="/listing/${car._id}/edit" class="button-list">Edit</a>
             <a href="/listing/${car._id}/delete" class="button-list">Delete</a>
         </div>`
-            : nothing
-        }
+        : nothing
+    }
         
     </div>
     </section>
@@ -29,9 +29,15 @@ const detailsTemplate = (car, userId) => html`
 
 
 export const renderCarDetails = (ctx) => {
-    let userId = ctx.user._id;
- carService.getOne(ctx.params.carId)
- .then(car => {
-     ctx.render(detailsTemplate(car, userId));
- });    
+    
+    carService.getOne(ctx.params.carId)
+        .then(car => {
+            if(!ctx.user){
+                ctx.render(detailsTemplate(car));
+            } else{
+                let userId = ctx.user._id;
+                ctx.render(detailsTemplate(car, userId));
+            }
+            
+        });
 }

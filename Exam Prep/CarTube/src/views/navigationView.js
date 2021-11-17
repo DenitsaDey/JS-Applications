@@ -22,7 +22,7 @@ const navTemplate = (user) => html`
 <nav>
     <a class="active" href="/">Home</a>
     <a href="/listing">All Listings</a>
-    <a href="#">By Year</a>
+    <a href="/search">By Year</a>
     
     ${user 
         ? loggedUserNav(user.username)
