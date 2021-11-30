@@ -28,16 +28,15 @@ const detailsTemplate = (car, userId) => html`
    `;
 
 
-export const renderCarDetails = (ctx) => {
+export async function renderCarDetails(ctx){
     
-    carService.getOne(ctx.params.carId)
-        .then(car => {
+    const car = carService.getById(ctx.params.carId);
+        
             if(!ctx.user){
                 ctx.render(detailsTemplate(car));
             } else{
                 let userId = ctx.user._id;
                 ctx.render(detailsTemplate(car, userId));
             }
-            
-        });
+           
 }

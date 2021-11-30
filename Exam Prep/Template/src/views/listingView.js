@@ -36,11 +36,14 @@ const listingTemplate = (cars = []) => html`
     </section>
      `;
 
-export const renderListing = (ctx) => {
-    carService.getAll()
-        .then(cars => {
-            console.log(cars);
-            ctx.render(listingTemplate(cars));
-        })
+export async function renderListing(ctx){
+
+    const cars = await carService.getAll();
+    ctx.render(listingTemplate(cars));
+
+    // carService.getAll()
+    //     .then(cars => {
+    //         ctx.render(listingTemplate(cars));
+    //     })
         
 }

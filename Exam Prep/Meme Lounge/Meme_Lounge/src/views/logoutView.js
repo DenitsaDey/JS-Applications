@@ -1,6 +1,7 @@
 import * as authService from '../services/authService.js';
 
-export async function renderLogout(ctx){
-    await authService.logout();
+export function renderLogout(ctx){
+    authService.logout();
     ctx.page.redirect('/');
 }
+

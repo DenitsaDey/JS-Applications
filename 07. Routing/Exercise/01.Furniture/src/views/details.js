@@ -1,6 +1,7 @@
 import { html, nothing, until } from "../lib.js";
 import { getUserData } from "../util.js";
 import { deleteFurniture, getById } from "../api/data.js";
+import { showModal } from "../common/modal.js"
 
 const detailsTemplate = (itemPromise) => html`
 <div class="row space-top">
@@ -39,12 +40,14 @@ export function detailsPage(ctx){
    ctx.render(detailsTemplate(loadItem(ctx.params.id, onDelete)));
 
    async function onDelete(){
-       const choice = confirm('Are you sure you want to delete this item?');
+       const choice = await showModal('Are you sure you want to delete this item?');
+       
        if(choice){
            await deleteFurniture(ctx.params.id);
            ctx.page.redirect('/');
        }
    }
+
 }
 
 async function loadItem(id, onDelete){

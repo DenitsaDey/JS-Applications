@@ -6,7 +6,9 @@ export async function login(email, password){
     const result = await api.post('/users/login', { email, password});
 
     const userData = {
+        username: result.username,
         email: result.email,
+        gender: result.gender,
         id: result._id, 
         token: result.accessToken
     }
@@ -15,11 +17,13 @@ export async function login(email, password){
     return userData;
 }
 
-export async function register(email, password){
-    const result = await api.post('/users/register', { email, password});
+export async function register(username, email, password, gender){
+    const result = await api.post('/users/register', { username, email, password, gender});
 
     const userData = {
+        username: result.username,
         email: result.email,
+        gender: result.gender,
         id: result._id, 
         token: result.accessToken
     }
@@ -28,8 +32,8 @@ export async function register(email, password){
     return userData;
 }
 
-export async function logout(){
-    await api.get('/users/logout'); //might need to remove await 
+export function logout(){
+    api.get('/users/logout'); 
     clearUserData();
 }
 

@@ -17,11 +17,12 @@ document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
 page(decorateContext);
 page('/', catalogPage);
-page('/details/:id', detailsPage);
-page('/create', createPage);
-page('/edit/:id', editPage);
 page('/login', loginPage);
 page('/register', registerPage);
+page('/create', createPage);
+page('/details/:id', detailsPage);
+page('/edit/:id', editPage);
+
 page('/my-furniture', catalogPage);
 
 updateUserNav();
