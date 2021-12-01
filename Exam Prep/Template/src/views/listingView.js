@@ -13,7 +13,7 @@ const carTemplate = (car) => html`
             <h3>Price: ${car.price} $</h3>
         </div>
         <div class="data-buttons">
-            <a href="/listing/${car._id}" class="button-carDetails">Details</a>
+            <a href="/details/${car._id}" class="button-carDetails">Details</a>
         </div>
     </div>
 </div>
@@ -23,14 +23,11 @@ const listingTemplate = (cars = []) => html`
     <section id="car-listings">
     <h1>Car Listings</h1>
     <div class="listings">
-
-        <!-- Display all records -->
-        ${cars.map(carTemplate)}
-
+        <!-- Display all records (if any) or -->
         <!-- Display if there are no records -->
         ${cars.length == 0
             ? html`<p class="no-cars">No cars in database.</p>`
-            : nothing
+            : cars.map(carTemplate)
         }
     </div>
     </section>
@@ -39,11 +36,5 @@ const listingTemplate = (cars = []) => html`
 export async function renderListing(ctx){
 
     const cars = await carService.getAll();
-    ctx.render(listingTemplate(cars));
-
-    // carService.getAll()
-    //     .then(cars => {
-    //         ctx.render(listingTemplate(cars));
-    //     })
-        
+    ctx.render(listingTemplate(cars));        
 }

@@ -1,5 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import * as authService from '../services/authService.js';
+// import { notify } from './notifyView.js';
+// replace alert with notify
 
 const loginTemplate = (onSubmit) => html`
 <section id="login">
@@ -18,7 +20,7 @@ const loginTemplate = (onSubmit) => html`
                 </form>
                 <div class="signin">
                     <p>Dont have an account?
-                        <a href="#">Sign up</a>.
+                        <a href="/register">Sign up</a>.
                     </p>
                 </div>
             </div>
@@ -26,18 +28,20 @@ const loginTemplate = (onSubmit) => html`
         `;
 
 export function renderLogin(ctx){
-    const onSubmit = (e) => { 
+    async function onSubmit(e){ 
         e.preventDefault();
 
         let formData = new FormData(e.currentTarget);
 
-        let username = formData.get('username');
-        let password = formData.get('password');
+        let username = formData.get('username').trim();
+        let password = formData.get('password').trim();
 
-        authService.login(username, password)
-        .then(() => {
-            ctx.page.redirect('/listing');
-        });
+        if (username == '' && password == '') {
+            return alert('All fields are required');
+        }
+        await authService.login(username, password);
+        e.target.reset();
+        ctx.page.redirect('/listing');
     }
     ctx.render(loginTemplate(onSubmit));
 }

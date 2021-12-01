@@ -1,4 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+// import { getUserData } from '../services/authService.js';
 
 const homeTemplate = () => html`
     <section id="main">
@@ -15,5 +16,12 @@ const homeTemplate = () => html`
 
 
 export const renderHome = (ctx) => {
-    ctx.render(homeTemplate())
+    ctx.render(homeTemplate());
+    /* or when logged in user should not see home page
+    if (getUserData()) {
+        ctx.page.redirect('/memes');
+    } else { 
+        ctx.render(homeTemplate()); 
+    }
+    */
 }

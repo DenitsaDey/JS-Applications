@@ -34,8 +34,8 @@ page('/register', renderRegister);
 page('/logout', renderLogout); // or check bellow without url endpoint by using Logout button event listener
 page('/listing', renderListing);
 page('/create', renderCreateCar);
-page('/listing/:carId', renderCarDetails);
-page('/listing/:carId/edit', renderEditCar);
+page('/details/:carId', renderCarDetails);
+page('/edit/:carId', renderEditCar);
 page('/listing/:carId/delete', renderDeleteCar); // or check detailsCarView for delete by using Delete Btn event listener 
 page('/profile', renderMyListing);
 page('/search', renderSearch);

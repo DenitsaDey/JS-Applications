@@ -14,29 +14,28 @@ const carRecord = (car) => html`
                     <h3>Price: ${car.price} $</h3>
                 </div>
                 <div class="data-buttons">
-                    <a href="/listing/${car._id}" class="button-carDetails">Details</a>
+                    <a href="/details/${car._id}" class="button-carDetails">Details</a>
                 </div>
             </div>
         </div>
         `;
 
+// or when user details needed => (cars=[], user)
 const myListingTemplate = (cars = []) => html`
     <section id="my-listings">
-    <h1>My car listings</h1>
-    <div class="listings">
-        ${cars.length == 0
-        ? html`<p class="no-cars"> You haven't listed any cars yet.</p>`
-        : cars.map(carRecord)}
-        
-    </div>
+        <h1>My car listings</h1>
+        <div class="listings">
+            ${cars.length == 0
+            ? html`<p class="no-cars"> You haven't listed any cars yet.</p>`
+            : cars.map(carRecord)}
+    
+        </div>
     </section>
    `;
 
 
-export const renderMyListing = (ctx) => {
-    let userId = ctx.user._id;
-    carService.getOwn(userId)
-        .then(cars => {
-            ctx.render(myListingTemplate(cars));
-        });
+export async function renderMyListing(ctx) {
+    let userId = ctx.user.id;
+    const cars = await carService.getOwn(userId);
+    ctx.render(myListingTemplate(cars)); // or when user details needed in the view => (cars, ctx.user)
 }
