@@ -4,6 +4,7 @@ const endpoints = {
     all: '/data/cars?sortBy=_createdOn%20desc',
     byId: '/data/cars/',
     byYear: (year) => `/data/cars?where=year%3D${year}`,
+    byQuery: (query) => `/data/cars?where=brand%3D${query}`, // or as V.K.(`/data/cars?where=` + encodeURIComponent(`title LIKE "${query}"`))
     own: (userId) => `/data/cars?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`,
     create: '/data/cars',
     edit: '/data/cars/',
@@ -20,6 +21,10 @@ export async function getById(id){
 
 export const getByYear = (year) => {
     return api.get(endpoints.byYear(year));
+}
+
+export async function searchCars(query){
+    return api.get(endpoints.byQuery(query))
 }
 
 export async function getOwn(userId){
