@@ -41,7 +41,7 @@ export async function renderCarDetails(ctx) {
     if (!ctx.user) {
         ctx.render(detailsTemplate(car));
     } else {
-        let userId = ctx.user._id;
+        let userId = ctx.user.id;
         ctx.render(detailsTemplate(car, userId)); //(car, userId, onDelete)
     }
 
